@@ -42,7 +42,7 @@ POS for.NETには 既にLegacy COM Interopと呼ばれる、OPOSコントロー�
 - Visual Studio 2019またはVisual Studio Community 2019 version 16.6.1 (開発のみ)  
 - .NET framework 4.0以降  
 - Microsoft Point of Service for .NET v1.14.1 (POS for.NET) : https://www.microsoft.com/en-us/download/details.aspx?id=55758  
-- OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtension115  
+- OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtensionVer115  
 - Common Control Objects 1.15.000 : https://github.com/kunif/OPOS-CCO  
 - 対象デバイスのOPOSサービスオブジェクト
 
