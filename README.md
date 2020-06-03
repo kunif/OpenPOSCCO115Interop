@@ -41,7 +41,7 @@ In order to solve these problems, i created a service object with the following 
 To develop and execute this program you need:
 
 - Visual Studio 2019 or Visual Studio Community 2019  version 16.6.1 (development only)  
-- .NET framework 3.5 and 4.0 or later  
+- .NET framework 4.0 or later  
 - Microsoft Point of Service for .NET v1.14.1 (POS for.NET) : https://www.microsoft.com/en-us/download/details.aspx?id=55758  
 - OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtensionVer115  
 - Common Control Objects 1.15.000 : https://github.com/kunif/OPOS-CCO  
