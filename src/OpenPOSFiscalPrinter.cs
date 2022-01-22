@@ -1,6 +1,6 @@
 ﻿/*
 
-  Copyright (C) 2020 Kunio Fukuchi
+  Copyright (C) 2020-2022 Kunio Fukuchi
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -1307,6 +1307,16 @@ namespace OpenPOS.CCO115Interop
         public override void PrintRecItemFuelVoid(string description, decimal price, int vatInfo, decimal specialTax)
         {
             VerifyResult(_cco.PrintRecItemFuelVoid(description, price, vatInfo, specialTax));
+        }
+
+        public override void PrintRecItemRefund(string description, decimal amount, int quantity, int vatInfo, decimal unitAmount, string unitName)
+        {
+            VerifyResult(_cco.PrintRecItemRefund(description, amount, quantity, vatInfo, unitAmount, unitName));
+        }
+
+        public override void PrintRecItemRefundVoid(string description, decimal amount, int quantity, int vatInfo, decimal unitAmount, string unitName)
+        {
+            VerifyResult(_cco.PrintRecItemRefundVoid(description, amount, quantity, vatInfo, unitAmount, unitName));
         }
 
         public override void PrintRecItemVoid(string description, decimal price, int quantity, int vatInfo, decimal unitPrice, string unitName)

@@ -1,6 +1,6 @@
 ﻿/*
 
-  Copyright (C) 2020 Kunio Fukuchi
+  Copyright (C) 2020-2022 Kunio Fukuchi
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -509,6 +509,11 @@ namespace OpenPOS.CCO115Interop
             get { return _cco.CapFullSensor; }
         }
 
+        public override bool CapJamSensor
+        {
+            get { return _cco.CapJamSensor; }
+        }
+
         public override bool CapNearEmptySensor
         {
             get { return _cco.CapNearEmptySensor; }
@@ -527,6 +532,11 @@ namespace OpenPOS.CCO115Interop
         public override bool CapRepayDeposit
         {
             get { return _cco.CapRepayDeposit; }
+        }
+
+        public override bool CapRealTimeData
+        {
+            get { return _cco.CapRealTimeData; }
         }
 
         public override CashUnits CurrencyCashList

@@ -1,6 +1,6 @@
 ﻿/*
 
-  Copyright (C) 2020 Kunio Fukuchi
+  Copyright (C) 2020-2022 Kunio Fukuchi
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -498,6 +498,11 @@ namespace OpenPOS.CCO115Interop
 
         #region OPOSCheckScanner  Specific Properties
 
+        public override bool CapAutoContrast
+        {
+            get { return _cco.CapAutoContrast; }
+        }
+
         public override bool CapAutoGenerateFileId
         {
             get { return _cco.CapAutoGenerateFileID; }
@@ -521,6 +526,11 @@ namespace OpenPOS.CCO115Interop
         public override bool CapConcurrentMicr
         {
             get { return _cco.CapConcurrentMICR; }
+        }
+
+        public override bool CapContrast
+        {
+            get { return _cco.CapContrast; }
         }
 
         public override bool CapDefineCropArea
@@ -607,6 +617,19 @@ namespace OpenPOS.CCO115Interop
             set
             {
                 _cco.ConcurrentMICR = value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override int Contrast
+        {
+            get
+            {
+                return _cco.Contrast;
+            }
+            set
+            {
+                _cco.Contrast = value;
                 VerifyResult(_cco.ResultCode);
             }
         }

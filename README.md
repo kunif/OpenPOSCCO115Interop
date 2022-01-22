@@ -2,6 +2,15 @@
 
 This is POS for.NET service object for calling OPOS version 1.15 controls from POS for.NET.
 
+- 2022-01-22 BugFix:There were unimplemented properties/methods on the following devices.
+  - CashChanger
+  - CheckScanner
+  - FiscalPrinter
+  - POSPower
+  - POSPrinter
+  - Scale
+- Migrated to Visual Studio 2022 and .NET Framework 4.8.
+
 In POS for.NET, a mechanism called Legacy COM Interop, called OPOS control, is built inside POS for.NET.  
 However, this mechanism has the following issues:
 
@@ -40,8 +49,8 @@ In order to solve these problems, i created a service object with the following 
 
 To develop and execute this program you need:
 
-- Visual Studio 2019 or Visual Studio Community 2019  version 16.6.1 (development only)  
-- .NET framework 4.0 or later  
+- Visual Studio 2022 or Visual Studio Community 2022  version 17.0.5 (development only)  
+- .NET framework 4.8  
 - Microsoft Point of Service for .NET v1.14.1 (POS for.NET) : https://www.microsoft.com/en-us/download/details.aspx?id=55758  
 - OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtensionVer115  
 - Common Control Objects 1.15.000 : https://github.com/kunif/OPOS-CCO  

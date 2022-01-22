@@ -1,6 +1,6 @@
 ﻿/*
 
-  Copyright (C) 2020 Kunio Fukuchi
+  Copyright (C) 2020-2022 Kunio Fukuchi
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -505,6 +505,46 @@ namespace OpenPOS.CCO115Interop
         public override UpsChargeStates UpsChargeState
         {
             get { return (UpsChargeStates)InteropEnum<UpsChargeStates>.ToEnumFromInteger(_cco.UPSChargeState); }
+        }
+        public override int BatteryCapacityRemaining
+        {
+            get { return _cco.BatteryCapacityRemaining; }
+        }
+
+        public override int BatteryCriticallyLowThreshold
+        {
+            get
+            {
+                return _cco.BatteryCriticallyLowThreshold;
+            }
+            set
+            {
+                _cco.BatteryCriticallyLowThreshold = value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override int BatteryLowThreshold
+        {
+            get
+            {
+                return _cco.BatteryLowThreshold;
+            }
+            set
+            {
+                _cco.BatteryLowThreshold = value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override bool CapBatteryCapacityRemaining
+        {
+            get { return _cco.CapBatteryCapacityRemaining; }
+        }
+
+        public override PowerSource PowerSource
+        {
+            get { return (PowerSource)InteropEnum<PowerSource>.ToEnumFromInteger(_cco.PowerSource); }
         }
 
         #endregion OPOSPOSPower  Specific Properties

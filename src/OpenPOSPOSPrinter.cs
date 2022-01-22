@@ -1,6 +1,6 @@
 ﻿/*
 
-  Copyright (C) 2020 Kunio Fukuchi
+  Copyright (C) 2020-2022 Kunio Fukuchi
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -27,6 +27,9 @@ namespace OpenPOS.CCO115Interop
     using Microsoft.PointOfService;
     using OpenPOS.Devices;
     using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
 
     [ServiceObject(DeviceType.PosPrinter, "OpenPOS 1.15 POSPrinter", "OPOS POSPrinter CCO Interop", 1, 15)]
     public class OpenPOSPOSPrinter : PosPrinter, ILegacyControlObject, IDisposable
@@ -507,6 +510,11 @@ namespace OpenPOS.CCO115Interop
             get { return _cco.CapConcurrentRecSlp; }
         }
 
+        public override bool CapConcurrentPageMode
+        {
+            get { return _cco.CapConcurrentPageMode; }
+        }
+
         public override bool CapCoverSensor
         {
             get { return _cco.CapCoverSensor; }
@@ -647,6 +655,11 @@ namespace OpenPOS.CCO115Interop
             get { return _cco.CapRecNearEndSensor; }
         }
 
+        public override bool CapRecPageMode
+        {
+            get { return _cco.CapRecPageMode; }
+        }
+
         public override bool CapRecPaperCut
         {
             get { return _cco.CapRecPapercut; }
@@ -755,6 +768,11 @@ namespace OpenPOS.CCO115Interop
         public override bool CapSlpNearEndSensor
         {
             get { return _cco.CapSlpNearEndSensor; }
+        }
+
+        public override bool CapSlpPageMode
+        {
+            get { return _cco.CapSlpPageMode; }
         }
 
         public override bool CapSlpPresent
@@ -1225,6 +1243,105 @@ namespace OpenPOS.CCO115Interop
             get { return _cco.SlpSidewaysMaxLines; }
         }
 
+        public override Point PageModeArea
+        {
+            get
+            {
+                string work = _cco.PageModeArea;
+                if (string.IsNullOrWhiteSpace(work))
+                {
+                    return Point.Empty;
+                }
+                else
+                {
+                    int[] pair = work.Split(',').Select<string, int>(int.Parse).ToArray();
+                    return new Point(pair[0], pair[1]);
+                }
+            }
+        }
+
+        public override PageModeDescriptors PageModeDescriptor
+        {
+            get
+            {
+                return (PageModeDescriptors)InteropEnum<PageModeDescriptors>.ToEnumFromInteger(_cco.PageModeDescriptor);
+            }
+        }
+
+        public override int PageModeHorizontalPosition
+        {
+            get
+            {
+                return _cco.PageModeHorizontalPosition;
+            }
+            set
+            {
+                _cco.PageModeHorizontalPosition = value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override Rectangle PageModePrintArea
+        {
+            get
+            {
+                string work = _cco.PageModePrintArea;
+                if (string.IsNullOrWhiteSpace(work))
+                {
+                    return Rectangle.Empty;
+                }
+                else
+                {
+                    int[] rect = work.Split(',').Select<string, int>(int.Parse).ToArray();
+                    return new Rectangle(rect[0], rect[1], rect[2], rect[3]);
+                }
+            }
+            set
+            {
+                _cco.PageModePrintArea = string.Join(",", new[] { value.X, value.Y, value.Width, value.Height });
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override PageModePrintDirection PageModePrintDirection
+        {
+            get
+            {
+                return (PageModePrintDirection)InteropEnum<PageModePrintDirection>.ToEnumFromInteger(_cco.PageModePrintDirection);
+            }
+            set
+            {
+                _cco.PageModePrintDirection = (int)value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override PrinterStation PageModeStation
+        {
+            get
+            {
+                return (PrinterStation)InteropEnum<PrinterStation>.ToEnumFromInteger(_cco.PageModeStation);
+            }
+            set
+            {
+                _cco.PageModeStation = (int)value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
+        public override int PageModeVerticalPosition
+        {
+            get
+            {
+                return _cco.PageModeVerticalPosition;
+            }
+            set
+            {
+                _cco.PageModeVerticalPosition = value;
+                VerifyResult(_cco.ResultCode);
+            }
+        }
+
         #endregion POSPrinter Specific Properties
 
         #region POSPrinter Specific Methodss
@@ -1242,6 +1359,11 @@ namespace OpenPOS.CCO115Interop
         public override void ChangePrintSide(PrinterSide side)
         {
             VerifyResult(_cco.ChangePrintSide((int)side));
+        }
+
+        public override void ClearPrintArea()
+        {
+            VerifyResult(_cco.ClearPrintArea());
         }
 
         public override void CutPaper(int percentage)
@@ -1269,6 +1391,11 @@ namespace OpenPOS.CCO115Interop
             VerifyResult(_cco.MarkFeed((int)type));
         }
 
+        public override void PageModePrint(PageModePrintControl control)
+        {
+            VerifyResult(_cco.PageModePrint((int)control));
+        }
+
         public override void PrintBarCode(PrinterStation station, string data, BarCodeSymbology symbology, int height, int width, int alignment, BarCodeTextPosition textPosition)
         {
             VerifyResult(_cco.PrintBarCode((int)station, data, (int)symbology, height, width, alignment, (int)textPosition));
@@ -1282,6 +1409,16 @@ namespace OpenPOS.CCO115Interop
         public override void PrintImmediate(PrinterStation station, string data)
         {
             VerifyResult(_cco.PrintImmediate((int)station, data));
+        }
+
+        public override void PrintMemoryBitmap(PrinterStation station, Bitmap data, int width, int alignment)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                data.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                string memorybitmap = InteropCommon.ToStringFromByteArray(ms.ToArray(), _binaryConversion);
+                VerifyResult(_cco.PrintMemoryBitmap((int)station, memorybitmap, (int)OPOSPOSPrinterConstants.PTR_BMT_BMP, width, alignment));
+            }
         }
 
         public override void PrintNormal(PrinterStation station, string data)

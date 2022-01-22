@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenPOS.CCO115Interop")]
-[assembly: AssemblyCopyright("Copyright ©  2020 Kunio Fukuchi All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright ©  2020-2022 Kunio Fukuchi All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
