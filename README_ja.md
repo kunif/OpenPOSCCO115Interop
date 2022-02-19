@@ -48,7 +48,7 @@ POS for.NETには 既にLegacy COM Interopと呼ばれる、OPOSコントロー�
 
 このプログラムの開発および実行には以下が必要です。
 
-- Visual Studio 2022またはVisual Studio Community 2022 version 17.0.5 (開発のみ)  
+- Visual Studio 2022またはVisual Studio Community 2022 version 17.1.0 (開発のみ)  
 - .NET framework 4.8  
 - Microsoft Point of Service for .NET v1.14.1 (POS for.NET) : https://www.microsoft.com/en-us/download/details.aspx?id=55758  
 - OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtensionVer115  

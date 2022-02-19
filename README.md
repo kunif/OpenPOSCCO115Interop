@@ -49,7 +49,7 @@ In order to solve these problems, i created a service object with the following 
 
 To develop and execute this program you need:
 
-- Visual Studio 2022 or Visual Studio Community 2022  version 17.0.5 (development only)  
+- Visual Studio 2022 or Visual Studio Community 2022  version 17.1.0 (development only)  
 - .NET framework 4.8  
 - Microsoft Point of Service for .NET v1.14.1 (POS for.NET) : https://www.microsoft.com/en-us/download/details.aspx?id=55758  
 - OpenPOS.Extension.Ver115 : https://github.com/kunif/OpenPOSExtensionVer115  
